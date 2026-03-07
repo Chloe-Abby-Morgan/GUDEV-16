@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public bool canAttack;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Rigidbody2D baguetteHandle;
     [SerializeField] private float moveSpeed=5f;
@@ -32,13 +31,12 @@ public class Player : MonoBehaviour
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.05f, whatIsGround);
 
-        MousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 lookDir = MousePos - baguetteHandle.position;
-        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
-        baguetteHandle.rotation = angle;
-
-        Movement.x = Input.GetAxisRaw("Horizontal");
-        rb.MovePosition(rb.position + Movement * moveSpeed * Time.fixedDeltaTime);
-        baguetteHandle.position = rb.position;
+            MousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 lookDir = MousePos - baguetteHandle.position;
+            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+            baguetteHandle.rotation = angle;
+            Movement.x = Input.GetAxisRaw("Horizontal");
+            rb.MovePosition(rb.position + Movement * moveSpeed * Time.fixedDeltaTime);
+            baguetteHandle.position = rb.position;
     }
 }

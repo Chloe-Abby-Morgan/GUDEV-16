@@ -305,7 +305,9 @@ MonoBehaviour:
   bpm: 100
   audioSource: {fileID: 469781470}
   intervals:
-  - trigger:
+  - noteType: 2
+    isRest: 0
+    trigger:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1175882217}
@@ -320,7 +322,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - trigger:
+  - noteType: 1
+    isRest: 1
+    trigger:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1310329626}
@@ -335,7 +339,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - trigger:
+  - noteType: 0
+    isRest: 0
+    trigger:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 550203083}
@@ -350,7 +356,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - trigger:
+  - noteType: 0
+    isRest: 1
+    trigger:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1797022284}
@@ -365,6 +373,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  baguette: {fileID: 734442179}
 --- !u!82 &469781470
 AudioSource:
   m_ObjectHideFlags: 0
@@ -980,7 +989,7 @@ GameObject:
   - component: {fileID: 734442179}
   m_Layer: 0
   m_Name: Baguette
-  m_TagString: Untagged
+  m_TagString: baguette
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1150,7 +1159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b125b04701c50d4b9097cbbcdb5119c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  canAttack: 0
   rb: {fileID: 945232072}
   baguetteHandle: {fileID: 1683057100}
   moveSpeed: 15
@@ -1792,7 +1800,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6417773968482583008, guid: f1e76e5721380d5448a51e779de100df, type: 3}
+  m_Sprite: {fileID: 850353742958593763, guid: 0ad89ed6b6cc71c48b6e6a0cac34e6e7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

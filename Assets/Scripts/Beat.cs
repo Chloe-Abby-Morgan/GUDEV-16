@@ -7,12 +7,10 @@ public class Beat : MonoBehaviour
 {
     [SerializeField] private GameObject note;
     private Vector3 startSize;
-    private Baguette baguette;
 
     private void Start()
     {
         startSize = transform.localScale;
-        baguette = GameObject.FindGameObjectWithTag("baguette").GetComponent<Baguette>();
     }
 
     private void Update()
@@ -21,12 +19,6 @@ public class Beat : MonoBehaviour
     }
     public void beating()
     {
-        baguette.canAttack = true;
         transform.localScale = startSize * 2f;
-    }
-    
-    public void endAttack()
-    {
-        baguette.canAttack = false;
     }
 }

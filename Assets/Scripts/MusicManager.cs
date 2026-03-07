@@ -7,30 +7,72 @@ public class MusicManager : MonoBehaviour
 {
     [SerializeField] private float bpm;
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private Intervals[] intervals;
-    private int lastBeat = -1;
+    [SerializeField] private NoteInterval[] intervals;
+    [SerializeField] private Baguette baguette;
+    private int currentIndex = 0;
+    private float nextTriggerTime = 0f;
+
+    private void Start()
+    {
+        nextTriggerTime = 0f;
+    }
 
     private void Update()
     {
+        if (!audioSource.isPlaying || intervals.Length == 0)
+            return;
 
-        float beatLength = 60f / bpm;
-        int currentBeat = Mathf.FloorToInt(audioSource.timeSamples / (audioSource.clip.frequency * beatLength));
-        if (currentBeat != lastBeat)
+        float currentTime = audioSource.time;
+
+        if (currentTime >= nextTriggerTime)
         {
-            lastBeat = currentBeat;
-            int index = currentBeat % intervals.Length;
-            intervals[index].Trigger();
+            NoteInterval interval = intervals[currentIndex];
+
+            if (!interval.isRest)
+            {
+                baguette.canAttack = true;
+                interval.Trigger();
+            }
+            else
+            {
+                baguette.canAttack = false;
+            }
+
+            float beatLength = 60f / bpm;
+            nextTriggerTime += beatLength * interval.GetBeatMultiplier();
+
+            currentIndex = (currentIndex + 1) % intervals.Length;
         }
     }
 
     [System.Serializable]
-    public class Intervals
+    public class NoteInterval
     {
-        [SerializeField] private UnityEvent trigger;
+        public NoteType noteType;
+        public bool isRest;
+        public UnityEvent trigger;
 
         public void Trigger()
         {
             trigger.Invoke();
         }
+
+        public float GetBeatMultiplier()
+        {
+            switch (noteType)
+            {
+                case NoteType.Eighth: return 0.5f;
+                case NoteType.Quarter: return 1f;
+                case NoteType.Half: return 2f;
+                default: return 1f;
+            }
+        }
+    }
+
+    public enum NoteType
+    {
+        Eighth,
+        Quarter,
+        Half
     }
 }
