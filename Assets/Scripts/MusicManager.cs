@@ -15,11 +15,9 @@ public class MusicManager : MonoBehaviour
 
         float beatLength = 60f / bpm;
         int currentBeat = Mathf.FloorToInt(audioSource.timeSamples / (audioSource.clip.frequency * beatLength));
-
         if (currentBeat != lastBeat)
         {
             lastBeat = currentBeat;
-
             int index = currentBeat % intervals.Length;
             intervals[index].Trigger();
         }

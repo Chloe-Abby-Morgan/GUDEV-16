@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Baguette : MonoBehaviour
 {
-    [SerializeField] private bool attacking;
+    public bool canAttack;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(attacking && collision.CompareTag("enemy"))
+        if(canAttack && collision.CompareTag("enemy"))
         {
-            Debug.Log("Hit");
+            Debug.Log("Hit"); 
         }
     }
 }

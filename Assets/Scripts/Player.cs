@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public bool canAttack;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Rigidbody2D baguetteHandle;
     [SerializeField] private float moveSpeed=5f;
