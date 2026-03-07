@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
             rb.AddForce(Vector2.up * jumpUp * 1000f);
         }
 
-         rb.gravityScale = rb.linearVelocityY > 0 ? jumpUp : jumpDown;
+        rb.gravityScale = rb.linearVelocityY > 0 ? jumpUp : jumpDown;
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.05f, whatIsGround);
 
