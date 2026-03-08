@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class Beat : MonoBehaviour
 {
-    [SerializeField] private GameObject note;
     private Vector3 startSize;
+    GameObject note;
 
     private void Start()
     {
+        note = gameObject;
         startSize = transform.localScale;
     }
 
