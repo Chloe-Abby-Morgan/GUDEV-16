@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "attack")
+        if(collision.tag == "attack" || collision.tag == "Player")
         {
             Destroy(gameObject);
         }

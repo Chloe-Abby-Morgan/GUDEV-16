@@ -8,12 +8,12 @@ public class Card : MonoBehaviour
 {
     [SerializeField] private MusicManager Mm;
     [SerializeField] private Sprite[] arrows;
+    [SerializeField] private GameObject cardUI;
     public MusicManager.NoteType noteType;
     private int position;
     private Sprite displayIm;
-    private MusicManager.NoteDirection nDirection;
     private bool[] taken = new bool[5];
-
+    
     private void Start()
     {
         Mm = GameObject.FindWithTag("MusicMan").GetComponent<MusicManager>();
@@ -25,7 +25,7 @@ public class Card : MonoBehaviour
             return;
         }
 
-        Mm.inputNotes.Add(new MusicManager.NoteInterval {noteType = noteType, startBeat = position, direction = nDirection, displaySprite = displayIm});
+        Mm.inputNotes.Add(new MusicManager.NoteInterval {noteType = noteType, startBeat = position, direction = LastSelected.instance.lSel, displaySprite = displayIm});
 
         if(noteType == MusicManager.NoteType.Half)
         {
@@ -36,6 +36,8 @@ public class Card : MonoBehaviour
         {
             taken[position] = true;
         }
+
+        cardUI.SetActive(false);
     }
 
     public void quarter()
@@ -70,25 +72,27 @@ public class Card : MonoBehaviour
 
     public void up()
     {
-        nDirection = MusicManager.NoteDirection.Up;
+        LastSelected.instance.lSel = MusicManager.NoteDirection.Up;
         displayIm = arrows[0];
     }
 
     public void down()
     {
-        nDirection = MusicManager.NoteDirection.Down;
+        LastSelected.instance.lSel = MusicManager.NoteDirection.Down;
         displayIm = arrows[1];
     }
 
     public void right()
     {
-        nDirection = MusicManager.NoteDirection.Right;
+        LastSelected.instance.lSel = MusicManager.NoteDirection.Right;
         displayIm = arrows[2];
     }
 
     public void left()
     {
-        nDirection = MusicManager.NoteDirection.Left;
+        LastSelected.instance.lSel = MusicManager.NoteDirection.Left;
         displayIm = arrows[3];
     }
+
+
 }

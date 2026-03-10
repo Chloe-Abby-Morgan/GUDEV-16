@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float dashSpeed = 20f;
     [SerializeField] private float dashTime = 0.15f;
     [SerializeField] private float dashInputTime = 0.15f;
+    [SerializeField] private int health;
     private bool isGrounded = true;
     private Vector2 Movement;
     private bool isDashing = false;
@@ -23,6 +25,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if(health < 0)
+        {
+            Debug.Log("Dead");
+        }
         if (dInputWait)
         {
         dInputTimer += Time.deltaTime;
@@ -141,5 +147,17 @@ public class Player : MonoBehaviour
         return false;
     }
 
-    
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "enemy")
+        {
+            StartCoroutine(takingDamage());
+        }
+    }
+
+    IEnumerator takingDamage()
+    {
+        yield return new WaitForSeconds(0.2f);
+        health -=1;
+    }
 }
