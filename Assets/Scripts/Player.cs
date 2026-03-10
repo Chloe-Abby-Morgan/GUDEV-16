@@ -11,14 +11,36 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private float dashSpeed = 20f;
     [SerializeField] private float dashTime = 0.15f;
+    [SerializeField] private float dashInputTime = 0.15f;
     private bool isGrounded = true;
     private Vector2 Movement;
     private bool isDashing = false;
+    private bool dInputWait;
     private float dashTimer = 0f;
+    private float dInputTimer;
+    private MusicManager.NoteDirection inD;
     private Vector2 dashDirection;
 
     void Update()
     {
+        if (dInputWait)
+        {
+        dInputTimer += Time.deltaTime;
+
+        if (dInputTimer > dashInputTime)
+        {
+            dInputWait = false;
+        }
+        else
+        {
+            if (CheckDashKey(inD))
+            {
+                dInputWait = false;
+                PerformDash(inD);
+            }
+        }
+    }
+
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.05f, whatIsGround);
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -66,6 +88,13 @@ public class Player : MonoBehaviour
             return;
         }
 
+       dInputWait = true;
+       inD = dir;
+       dInputTimer = 0f;
+    }
+
+    void PerformDash(MusicManager.NoteDirection dir)
+    {  
         switch (dir)
         {
             case MusicManager.NoteDirection.Up:
@@ -89,4 +118,28 @@ public class Player : MonoBehaviour
                 break;
         }
     }
+
+
+    bool CheckDashKey(MusicManager.NoteDirection dir)
+    {
+        switch (dir)
+            {
+                case MusicManager.NoteDirection.Up:
+                    return Input.GetKeyDown(KeyCode.W);
+
+                case MusicManager.NoteDirection.Down:
+                    return Input.GetKeyDown(KeyCode.S);
+
+                case MusicManager.NoteDirection.Left:
+                    return Input.GetKeyDown(KeyCode.A);
+
+                case MusicManager.NoteDirection.Right:
+                    return Input.GetKeyDown(KeyCode.D);
+                
+            }
+
+        return false;
+    }
+
+    
 }
