@@ -8,6 +8,7 @@ public class Card : MonoBehaviour
     [SerializeField] private MusicManager Mm;
     public MusicManager.NoteType noteType;
     private int position;
+    private MusicManager.NoteDirection nDirection;
     private bool[] taken = new bool[5];
 
     private void Start()
@@ -21,7 +22,7 @@ public class Card : MonoBehaviour
             return;
         }
 
-        Mm.inputNotes.Add(new MusicManager.NoteInterval {noteType = noteType, startBeat = position});
+        Mm.inputNotes.Add(new MusicManager.NoteInterval {noteType = noteType, startBeat = position, direction = nDirection});
 
         if(noteType == MusicManager.NoteType.Half)
         {
@@ -62,5 +63,25 @@ public class Card : MonoBehaviour
     public void four()
     {
         position = 4;
+    }
+
+    public void up()
+    {
+        nDirection = MusicManager.NoteDirection.Up;
+    }
+
+    public void down()
+    {
+        nDirection = MusicManager.NoteDirection.Down;
+    }
+
+    public void right()
+    {
+        nDirection = MusicManager.NoteDirection.Right;
+    }
+
+    public void left()
+    {
+        nDirection = MusicManager.NoteDirection.Left;
     }
 }

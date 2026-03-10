@@ -9,6 +9,7 @@ public class MusicManager : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private Image[] beatImages = new Image[4];
     [SerializeField] private Beat[] beatComponents = new Beat[4];
+    [SerializeField] private Player player;
     public List<NoteInterval> inputNotes;
     public Sprite quarterNoteSprite;
     public Sprite halfNoteSprite;
@@ -27,6 +28,7 @@ public class MusicManager : MonoBehaviour
     {
         BuildMeasure();
         AssignUIImages();
+
         float currentTime = audioSource.time;
 
         if (currentTime >= nextTriggerTime)
@@ -39,11 +41,11 @@ public class MusicManager : MonoBehaviour
             {
                 interval.Trigger();
                 beatComponents[currentBeatIndex].beating();
+                player.DashFromMusic(interval.direction);
             }
 
             float beatLength = 60f / bpm;
             nextTriggerTime += beatLength;
-
             currentBeatIndex = (currentBeatIndex + 1) % 4;
         }
     }
@@ -112,6 +114,8 @@ public class MusicManager : MonoBehaviour
 
             measure[index] = CreateInterval(NoteType.Half, false, false);
             measure[index + 1] = CreateInterval(NoteType.Half, false, true);
+            measure[index].direction = note.direction;
+            measure[index + 1].direction = note.direction;
         }
         else
         {
@@ -121,6 +125,7 @@ public class MusicManager : MonoBehaviour
             }
 
             measure[index] = CreateInterval(NoteType.Quarter, false, false);
+            measure[index].direction = note.direction;
         }
     }
 
@@ -133,9 +138,10 @@ public class MusicManager : MonoBehaviour
             if (type == NoteType.Half)
             {
                 if (beat >= 4)
-                { 
+                {
                     return -1;
                 }
+
                 if (measure[index] == null && measure[index + 1] == null)
                 {
                     return beat;
@@ -144,7 +150,9 @@ public class MusicManager : MonoBehaviour
             else
             {
                 if (measure[index] == null)
+                {
                     return beat;
+                }
             }
         }
 
@@ -167,7 +175,8 @@ public class MusicManager : MonoBehaviour
             noteType = type,
             isRest = rest,
             isFollower = follower,
-            trigger = new UnityEvent()
+            trigger = new UnityEvent(),
+            direction = NoteDirection.Up
         };
 
         if (rest)
@@ -195,6 +204,7 @@ public class MusicManager : MonoBehaviour
         public int startBeat;
         public Sprite displaySprite;
         public UnityEvent trigger;
+        public NoteDirection direction;
 
         public void Trigger()
         {
@@ -205,5 +215,10 @@ public class MusicManager : MonoBehaviour
     public enum NoteType
     {
         Quarter, Half
+    }
+
+    public enum NoteDirection
+    {
+        Up, Down, Left, Right
     }
 }
