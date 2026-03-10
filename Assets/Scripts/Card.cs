@@ -1,13 +1,16 @@
 using System;
 using System.Linq;
+using Microsoft.Unity.VisualStudio.Editor;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Card : MonoBehaviour
 {
     [SerializeField] private MusicManager Mm;
+    [SerializeField] private Sprite[] arrows;
     public MusicManager.NoteType noteType;
     private int position;
+    private Sprite displayIm;
     private MusicManager.NoteDirection nDirection;
     private bool[] taken = new bool[5];
 
@@ -22,7 +25,7 @@ public class Card : MonoBehaviour
             return;
         }
 
-        Mm.inputNotes.Add(new MusicManager.NoteInterval {noteType = noteType, startBeat = position, direction = nDirection});
+        Mm.inputNotes.Add(new MusicManager.NoteInterval {noteType = noteType, startBeat = position, direction = nDirection, displaySprite = displayIm});
 
         if(noteType == MusicManager.NoteType.Half)
         {
@@ -68,20 +71,24 @@ public class Card : MonoBehaviour
     public void up()
     {
         nDirection = MusicManager.NoteDirection.Up;
+        displayIm = arrows[0];
     }
 
     public void down()
     {
         nDirection = MusicManager.NoteDirection.Down;
+        displayIm = arrows[1];
     }
 
     public void right()
     {
         nDirection = MusicManager.NoteDirection.Right;
+        displayIm = arrows[2];
     }
 
     public void left()
     {
         nDirection = MusicManager.NoteDirection.Left;
+        displayIm = arrows[3];
     }
 }

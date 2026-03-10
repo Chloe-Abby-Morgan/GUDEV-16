@@ -8,6 +8,7 @@ TagManager:
   - enemy
   - baguette
   - MusicMan
+  - attack
   layers:
   - Default
   - TransparentFX

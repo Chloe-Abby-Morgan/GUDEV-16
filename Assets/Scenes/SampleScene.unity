@@ -422,6 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Card
   Mm: {fileID: 0}
+  arrows: []
   noteType: 1
 --- !u!1 &31349381
 GameObject:
@@ -590,6 +591,7 @@ GameObject:
   - component: {fileID: 139681821}
   - component: {fileID: 139681820}
   - component: {fileID: 139681822}
+  - component: {fileID: 139681823}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: enemy
@@ -717,6 +719,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &139681823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139681819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f998b0557c6698d4abc0706d65eef502, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  speed: 15
 --- !u!1 &409798992
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,7 +980,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &453523685
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1105,6 +1120,11 @@ MonoBehaviour:
   halfNoteSprite: {fileID: 850353742958593763, guid: 0ad89ed6b6cc71c48b6e6a0cac34e6e7, type: 3}
   halfFollowerSprite: {fileID: 850353742958593763, guid: 0ad89ed6b6cc71c48b6e6a0cac34e6e7, type: 3}
   restSprite: {fileID: -8671788379433464271, guid: 5d6b4bf7c1c0e224494ff6668cfdbb52, type: 3}
+  arrows:
+  - {fileID: 2034414015, guid: 8403603f74e70aa4a9fd93a797d2cabb, type: 3}
+  - {fileID: -102177382, guid: 8403603f74e70aa4a9fd93a797d2cabb, type: 3}
+  - {fileID: -7278168696683532170, guid: 8403603f74e70aa4a9fd93a797d2cabb, type: 3}
+  - {fileID: 1406285070, guid: 8403603f74e70aa4a9fd93a797d2cabb, type: 3}
 --- !u!82 &469781470
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2112,11 +2132,11 @@ GameObject:
   - component: {fileID: 873325764}
   m_Layer: 0
   m_Name: attackUp
-  m_TagString: Untagged
+  m_TagString: attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &873325762
 Transform:
   m_ObjectHideFlags: 0
@@ -2250,11 +2270,11 @@ GameObject:
   - component: {fileID: 880142633}
   m_Layer: 0
   m_Name: attackRight
-  m_TagString: Untagged
+  m_TagString: attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &880142631
 Transform:
   m_ObjectHideFlags: 0
@@ -2390,7 +2410,7 @@ GameObject:
   - component: {fileID: 945232070}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2422,6 +2442,7 @@ MonoBehaviour:
     m_Bits: 2
   dashSpeed: 40
   dashTime: 0.15
+  dashInputTime: 0.15
 --- !u!58 &945232071
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2656,11 +2677,11 @@ GameObject:
   - component: {fileID: 948875461}
   m_Layer: 0
   m_Name: attackLeft
-  m_TagString: Untagged
+  m_TagString: attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &948875459
 Transform:
   m_ObjectHideFlags: 0
@@ -3069,8 +3090,8 @@ Transform:
   m_GameObject: {fileID: 973217714}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0802, y: -3.43, z: 0}
-  m_LocalScale: {x: 21.7797, y: 1, z: 1}
+  m_LocalPosition: {x: 4.0331, y: -3.43, z: 0}
+  m_LocalScale: {x: 66.13767, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3177,8 +3198,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -7278168696683532170, guid: 8403603f74e70aa4a9fd93a797d2cabb, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3812,11 +3833,11 @@ GameObject:
   - component: {fileID: 1227107156}
   m_Layer: 0
   m_Name: attackDown
-  m_TagString: Untagged
+  m_TagString: attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1227107154
 Transform:
   m_ObjectHideFlags: 0
@@ -4979,6 +5000,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Card
   Mm: {fileID: 0}
+  arrows:
+  - {fileID: 2034414015, guid: 8403603f74e70aa4a9fd93a797d2cabb, type: 3}
+  - {fileID: -102177382, guid: 8403603f74e70aa4a9fd93a797d2cabb, type: 3}
+  - {fileID: -7278168696683532170, guid: 8403603f74e70aa4a9fd93a797d2cabb, type: 3}
+  - {fileID: 1406285070, guid: 8403603f74e70aa4a9fd93a797d2cabb, type: 3}
   noteType: 0
 --- !u!4 &1800728216
 Transform:

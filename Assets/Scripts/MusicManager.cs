@@ -15,6 +15,7 @@ public class MusicManager : MonoBehaviour
     public Sprite halfNoteSprite;
     public Sprite halfFollowerSprite;
     public Sprite restSprite;
+    public Sprite[] arrows;
     private int currentBeatIndex = 0;
     private NoteInterval[] measure = new NoteInterval[4];
     private float nextTriggerTime = 0f;
@@ -48,6 +49,18 @@ public class MusicManager : MonoBehaviour
             nextTriggerTime += beatLength;
             currentBeatIndex = (currentBeatIndex + 1) % 4;
         }
+    }
+
+    private Sprite GetArrowSprite(NoteDirection dir)
+    {
+        switch (dir)
+        {
+            case NoteDirection.Up: return arrows[0];
+            case NoteDirection.Down: return arrows[1];
+            case NoteDirection.Left: return arrows[2];
+            case NoteDirection.Right: return arrows[3];
+        }
+        return null;
     }
 
     private void BuildMeasure()
@@ -163,7 +176,16 @@ public class MusicManager : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            beatImages[i].sprite = measure[i].displaySprite;
+            var interval = measure[i];
+
+        if (!interval.isRest && !interval.isFollower)
+        {
+            beatImages[i].sprite = GetArrowSprite(interval.direction);
+        }
+        else
+        {
+            beatImages[i].sprite = interval.displaySprite;
+        }
             beatImages[i].gameObject.SetActive(true);
         }
     }
