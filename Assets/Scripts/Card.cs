@@ -10,9 +10,12 @@ public class Card : MonoBehaviour
     [SerializeField] private Sprite[] arrows;
     [SerializeField] private GameObject cardUI;
     public MusicManager.NoteType noteType;
+    public TimingManager Tim;
     private int position;
     private Sprite displayIm;
     private bool[] taken = new bool[5];
+    private Player player;
+    
     
     private void Start()
     {
@@ -37,7 +40,7 @@ public class Card : MonoBehaviour
             taken[position] = true;
         }
 
-        cardUI.SetActive(false);
+        Tim.showingUI = false;
     }
 
     public void quarter()
@@ -94,5 +97,9 @@ public class Card : MonoBehaviour
         displayIm = arrows[3];
     }
 
+    public void heal()
+    {
+        player.health += 1;
+    }
 
 }

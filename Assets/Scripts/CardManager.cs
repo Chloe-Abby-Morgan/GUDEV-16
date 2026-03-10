@@ -1,23 +1,29 @@
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
 {
     public GameObject[] buttonPrefabs; 
     public Transform[] spawnParent;
-    public Card card;      
+    public Card card;
+    private List<GameObject> spawnedButtons = new List<GameObject>();
 
     void Start()
     {
         SpawnRandomButtons(3);
     }
 
-    void SpawnRandomButtons(int count)
+    public void SpawnRandomButtons(int count)
     {
+        ClearButtons();
+
         for (int i = 0; i < count; i++)
         {
             int index = Random.Range(0, buttonPrefabs.Length);
             GameObject newButton = Instantiate(buttonPrefabs[index], spawnParent[i]);
+
+            spawnedButtons.Add(newButton);
 
             RectTransform rt = newButton.GetComponent<RectTransform>();
             rt.anchoredPosition = Vector2.zero;
@@ -45,6 +51,20 @@ public class CardManager : MonoBehaviour
             {
                 btn.onClick.AddListener(card.right);
             }
+            else if (name.Contains("heal"))
+            {
+                btn.onClick.AddListener(card.heal);
+            }
         }
+    }
+    private void ClearButtons()
+    {
+        foreach (GameObject btn in spawnedButtons)
+        {
+            if (btn != null)
+                Destroy(btn);
+        }
+
+        spawnedButtons.Clear();
     }
 }

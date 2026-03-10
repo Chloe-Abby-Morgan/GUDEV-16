@@ -332,6 +332,53 @@ Transform:
   - {fileID: 1674482042}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &367439770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 367439772}
+  - component: {fileID: 367439771}
+  m_Layer: 0
+  m_Name: TimingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &367439771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367439770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0108c5a5e50f75149a6ad14bbd39a694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TimingManager
+  cardUI: {fileID: 453523684}
+  showingUI: 1
+  cM: {fileID: 245582139}
+--- !u!4 &367439772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367439770}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 191.72667, y: 111.9473, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &453523684
 GameObject:
   m_ObjectHideFlags: 0
@@ -3074,6 +3121,7 @@ MonoBehaviour:
   - {fileID: 1406285070, guid: 8403603f74e70aa4a9fd93a797d2cabb, type: 3}
   cardUI: {fileID: 453523684}
   noteType: 0
+  Tim: {fileID: 367439771}
 --- !u!4 &1800728216
 Transform:
   m_ObjectHideFlags: 0
@@ -3478,3 +3526,4 @@ SceneRoots:
   - {fileID: 469781468}
   - {fileID: 1800728216}
   - {fileID: 245582140}
+  - {fileID: 367439772}

@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float dashSpeed = 20f;
     [SerializeField] private float dashTime = 0.15f;
     [SerializeField] private float dashInputTime = 0.15f;
-    [SerializeField] private int health;
     private bool isGrounded = true;
     private Vector2 Movement;
     private bool isDashing = false;
@@ -22,6 +21,7 @@ public class Player : MonoBehaviour
     private float dInputTimer;
     private MusicManager.NoteDirection inD;
     private Vector2 dashDirection;
+    public int health;
 
     void Update()
     {
@@ -158,6 +158,6 @@ public class Player : MonoBehaviour
     IEnumerator takingDamage()
     {
         yield return new WaitForSeconds(0.2f);
-        health -=1;
+        health -= 1;
     }
 }
