@@ -7,6 +7,7 @@ TagManager:
   - ground
   - enemy
   - baguette
+  - MusicMan
   layers:
   - Default
   - TransparentFX

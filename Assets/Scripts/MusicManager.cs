@@ -7,9 +7,9 @@ public class MusicManager : MonoBehaviour
 {
     [SerializeField] private float bpm;
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private NoteInterval[] inputNotes;
     [SerializeField] private Image[] beatImages = new Image[4];
     [SerializeField] private Beat[] beatComponents = new Beat[4];
+    public List<NoteInterval> inputNotes;
     public Sprite quarterNoteSprite;
     public Sprite halfNoteSprite;
     public Sprite halfFollowerSprite;
@@ -20,13 +20,13 @@ public class MusicManager : MonoBehaviour
 
     private void Start()
     {
-        BuildMeasure();
-        AssignUIImages();
         nextTriggerTime = 0f;
     }
 
     private void Update()
     {
+        BuildMeasure();
+        AssignUIImages();
         float currentTime = audioSource.time;
 
         if (currentTime >= nextTriggerTime)
