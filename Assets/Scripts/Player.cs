@@ -22,29 +22,33 @@ public class Player : MonoBehaviour
     private MusicManager.NoteDirection inD;
     private Vector2 dashDirection;
     public int health;
+    public TimingManager Tim;
 
     void Update()
     {
-        if(health < 0)
+        if(!Tim.showingUI)
         {
-            Debug.Log("Dead");
-        }
-        if (dInputWait)
-        {
-        dInputTimer += Time.deltaTime;
+            if(health < 0)
+            {
+                Debug.Log("Dead");
+            }
+            if (dInputWait)
+            {
+            dInputTimer += Time.deltaTime;
 
-        if (dInputTimer > dashInputTime)
-        {
-            dInputWait = false;
-        }
-        else
-        {
-            if (CheckDashKey(inD))
+            if (dInputTimer > dashInputTime)
             {
                 dInputWait = false;
-                PerformDash(inD);
             }
-        }
+            else
+            {
+                if (CheckDashKey(inD))
+                {
+                    dInputWait = false;
+                    PerformDash(inD);
+                }
+            }
+            
     }
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.05f, whatIsGround);
@@ -78,6 +82,7 @@ public class Player : MonoBehaviour
 
         Movement.x = Input.GetAxisRaw("Horizontal");
         rb.MovePosition(rb.position + Movement * moveSpeed * Time.deltaTime);
+    }
     }
 
     void BeginDash(Vector2 dir)

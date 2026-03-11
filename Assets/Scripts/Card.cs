@@ -10,16 +10,17 @@ public class Card : MonoBehaviour
     [SerializeField] private Sprite[] arrows;
     [SerializeField] private GameObject cardUI;
     public MusicManager.NoteType noteType;
+    public Player player;
     public TimingManager Tim;
     private int position;
     private Sprite displayIm;
     private bool[] taken = new bool[5];
-    private Player player;
     
     
     private void Start()
     {
         Mm = GameObject.FindWithTag("MusicMan").GetComponent<MusicManager>();
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
     public void add()
     {
@@ -99,7 +100,11 @@ public class Card : MonoBehaviour
 
     public void heal()
     {
-        player.health += 1;
+        if (player.health < 4)
+        {
+            player.health += 1;
+        }
+        Tim.showingUI = false;
     }
 
 }

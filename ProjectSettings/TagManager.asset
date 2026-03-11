@@ -9,6 +9,7 @@ TagManager:
   - baguette
   - MusicMan
   - attack
+  - Tim
   layers:
   - Default
   - TransparentFX
