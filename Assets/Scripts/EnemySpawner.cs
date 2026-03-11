@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int enemiesInRoom;
     [SerializeField] private bool spawnerDone;
     public TimingManager Tim;
+    private bool spawning=true;
 
 
     void Start()
@@ -28,6 +29,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if(!Tim.showingUI)
         {
+        spawning = true;
         index = Random.Range(0, spawnPoints.Length);
         currentPoint = spawnPoints[index];
         float spawnTime = Random.Range(minTimeBtwSpawn, maxTimeBtwSpawn);
@@ -40,6 +42,10 @@ public class EnemySpawner : MonoBehaviour
 
         Invoke("SpawnEnemy", spawnTime);
         }
+        else
+        {
+            spawning = false;
+        }
     }
     private void Update()
     {
@@ -51,38 +57,23 @@ public class EnemySpawner : MonoBehaviour
                 canSpawn = false;
             }
         }
+        if(!spawning)
+        {
+            SpawnEnemy();
+        }
     }
     IEnumerator IncreaseDifficulty()
     {
         yield return new WaitForSeconds(15f);
-        minTimeBtwSpawn = 0.75f;
-        maxTimeBtwSpawn = 1f;
-        Debug.Log("increased difficulty 2");
-        yield return new WaitForSeconds(20f);
-        minTimeBtwSpawn = 0.5f;
-        maxTimeBtwSpawn = 1f;
-        Debug.Log("increased difficulty 2");
-        yield return new WaitForSeconds(20f);
-        minTimeBtwSpawn = 1.25f;
-        maxTimeBtwSpawn = 2.25f;
-        Debug.Log("increased difficulty 3");
-        yield return new WaitForSeconds(20f);
-        minTimeBtwSpawn = 1.1f;
-        maxTimeBtwSpawn = 2.1f;
-        Debug.Log("increased difficulty 4");
-        yield return new WaitForSeconds(20f);
-        minTimeBtwSpawn = 1f;
-        maxTimeBtwSpawn = 1.55f;
-        Debug.Log("increased difficulty 5");
-        yield return new WaitForSeconds(20f);
-        minTimeBtwSpawn = 0.55f;
-        maxTimeBtwSpawn = 1f;
-        Debug.Log("increased difficulty 6");
+        minTimeBtwSpawn = 3f;
+        maxTimeBtwSpawn = 4f;
         yield return new WaitForSeconds(30f);
-        minTimeBtwSpawn = 0.5f;
-        maxTimeBtwSpawn = 0.1f;
-        Debug.Log("increased difficulty 7");
-
+        minTimeBtwSpawn = 3.25f;
+        maxTimeBtwSpawn = 3.75f;
+        Debug.Log("increased difficulty 3");
+        yield return new WaitForSeconds(40f);
+        minTimeBtwSpawn = 3f;
+        maxTimeBtwSpawn = 3.5f;
     }
 
     //Code Appropiatied from https://ldjam.com/events/ludum-dare/46/slimekeep

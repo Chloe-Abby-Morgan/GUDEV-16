@@ -7,17 +7,22 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject[] atackRange = new GameObject[3];
     [SerializeField] private GameObject[] healthObject;
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpUp = 1f;
-    [SerializeField] private float jumpDown = 2f;
+    [SerializeField] private float jumpUp = 1.4f;
+    [SerializeField] private float jumpDown = 3f;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private float dashSpeed = 20f;
     [SerializeField] private float dashTime = 0.15f;
     [SerializeField] private float dashInputTime = 0.15f;
+    [SerializeField] private float jumpTime = 0.18f;
+    [SerializeField] private float jumpMul = 25f;
+    [SerializeField] private float jumpPow = 12f;
     private bool isGrounded = true;
     private Vector2 Movement;
     private bool isDashing = false;
     private bool dInputWait;
+    private bool jumping;
+    private float jumpCount;
     private float dashTimer = 0f;
     private float dInputTimer;
     private MusicManager.NoteDirection inD;
@@ -25,103 +30,136 @@ public class Player : MonoBehaviour
     private bool damaging;
     public int health;
     public TimingManager Tim;
+    Vector2 Vgrav;
+
+    void Start()
+    {
+        Vgrav = Vector2.up;
+
+    }
 
     void Update()
     {
-        if(!Tim.showingUI)
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.12f, whatIsGround);
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            if(health < 0)
+            rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpPow);
+            jumping = true;
+            jumpCount = 0f;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            jumping = false;
+        }
+
+        if (!Tim.showingUI)
+        {
+            if (health < 0)
             {
-                Debug.Log("Dead");
                 healthObject[0].SetActive(false);
                 healthObject[1].SetActive(false);
                 healthObject[2].SetActive(false);
                 healthObject[3].SetActive(false);
             }
-            else if(health == 1)
+            else if (health == 1)
             {
                 healthObject[0].SetActive(true);
                 healthObject[1].SetActive(false);
                 healthObject[2].SetActive(false);
                 healthObject[3].SetActive(false);
             }
-            else if(health == 2)
+            else if (health == 2)
             {
                 healthObject[0].SetActive(true);
                 healthObject[1].SetActive(true);
                 healthObject[2].SetActive(false);
-                healthObject[3].SetActive(false); 
+                healthObject[3].SetActive(false);
             }
-            else if(health == 3)
+            else if (health == 3)
             {
                 healthObject[0].SetActive(true);
                 healthObject[1].SetActive(true);
                 healthObject[2].SetActive(true);
                 healthObject[3].SetActive(false);
             }
-            else if(health == 4)
+            else if (health == 4)
             {
                 healthObject[0].SetActive(true);
                 healthObject[1].SetActive(true);
                 healthObject[2].SetActive(true);
                 healthObject[3].SetActive(true);
             }
-            else if(health > 4)
+            else if (health > 4)
             {
                 health = 4;
             }
 
             if (dInputWait)
             {
-            dInputTimer += Time.deltaTime;
+                dInputTimer += Time.deltaTime;
 
-            if (dInputTimer > dashInputTime)
+                if (dInputTimer > dashInputTime)
+                {
+                    dInputWait = false;
+                }
+                else
+                {
+                    if (CheckDashKey(inD))
+                    {
+                        dInputWait = false;
+                        PerformDash(inD);
+                    }
+                }
+            }
+
+            if (isDashing)
             {
-                dInputWait = false;
+                dashTimer += Time.deltaTime;
+                rb.linearVelocity = dashDirection * dashSpeed;
+
+                if (dashTimer >= dashTime)
+                {
+                    isDashing = false;
+                }
+
+                return;
             }
             else
             {
-                if (CheckDashKey(inD))
-                {
-                    dInputWait = false;
-                    PerformDash(inD);
-                }
+                atackRange[0].SetActive(false);
+                atackRange[1].SetActive(false);
+                atackRange[2].SetActive(false);
+                atackRange[3].SetActive(false);
             }
-            
-    }
 
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.05f, whatIsGround);
-
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            rb.AddForce(Vector2.up * jumpUp * 1000f);
+            Movement.x = Input.GetAxisRaw("Horizontal");
+            rb.linearVelocity = new Vector2(Movement.x * moveSpeed, rb.linearVelocityY);
         }
 
-        rb.gravityScale = rb.linearVelocityY > 0 ? jumpUp : jumpDown;
-
-        if (isDashing)
+        if (rb.linearVelocityY < 0)
         {
-            dashTimer += Time.deltaTime;
-            rb.linearVelocity = dashDirection * dashSpeed;
-
-            if (dashTimer >= dashTime)
-            {
-                isDashing = false;
-            }
-
-            return;
+            rb.gravityScale = jumpDown;
         }
         else
         {
-            atackRange[0].SetActive(false);
-            atackRange[1].SetActive(false);
-            atackRange[2].SetActive(false);
-            atackRange[3].SetActive(false);
+            rb.gravityScale = jumpUp;
         }
 
-        Movement.x = Input.GetAxisRaw("Horizontal");
-        rb.MovePosition(rb.position + Movement * moveSpeed * Time.deltaTime);
-    }
+        if (jumping)
+        {
+            jumpCount += Time.deltaTime;
+
+            if (jumpCount < jumpTime)
+            {
+                rb.linearVelocity += Vgrav * jumpMul * Time.deltaTime;
+            }
+            else
+            {
+                jumping = false;
+            }
+        }
     }
 
     void BeginDash(Vector2 dir)
@@ -138,13 +176,13 @@ public class Player : MonoBehaviour
             return;
         }
 
-       dInputWait = true;
-       inD = dir;
-       dInputTimer = 0f;
+        dInputWait = true;
+        inD = dir;
+        dInputTimer = 0f;
     }
 
     void PerformDash(MusicManager.NoteDirection dir)
-    {  
+    {
         switch (dir)
         {
             case MusicManager.NoteDirection.Up:
@@ -169,24 +207,19 @@ public class Player : MonoBehaviour
         }
     }
 
-
     bool CheckDashKey(MusicManager.NoteDirection dir)
     {
         switch (dir)
-            {
-                case MusicManager.NoteDirection.Up:
-                    return Input.GetKeyDown(KeyCode.W);
-
-                case MusicManager.NoteDirection.Down:
-                    return Input.GetKeyDown(KeyCode.S);
-
-                case MusicManager.NoteDirection.Left:
-                    return Input.GetKeyDown(KeyCode.A);
-
-                case MusicManager.NoteDirection.Right:
-                    return Input.GetKeyDown(KeyCode.D);
-                
-            }
+        {
+            case MusicManager.NoteDirection.Up:
+                return Input.GetKeyDown(KeyCode.W);
+            case MusicManager.NoteDirection.Down:
+                return Input.GetKeyDown(KeyCode.S);
+            case MusicManager.NoteDirection.Left:
+                return Input.GetKeyDown(KeyCode.A);
+            case MusicManager.NoteDirection.Right:
+                return Input.GetKeyDown(KeyCode.D);
+        }
 
         return false;
     }
