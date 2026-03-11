@@ -14,7 +14,6 @@ public class Card : MonoBehaviour
     public TimingManager Tim;
     private int position;
     private Sprite displayIm;
-    private bool[] taken = new bool[5];
     
     
     private void Start()
@@ -23,26 +22,36 @@ public class Card : MonoBehaviour
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
     public void add()
+{
+    if ((noteType == MusicManager.NoteType.Half && position == 4) ||
+        Mm.taken[position] ||
+        (noteType == MusicManager.NoteType.Half && Mm.taken[position + 1]))
     {
-        if((noteType == MusicManager.NoteType.Half && position == 4) || taken[position] || (noteType == MusicManager.NoteType.Half && taken[position+1]))
-        {
-            return;
-        }
-
-        Mm.inputNotes.Add(new MusicManager.NoteInterval {noteType = noteType, startBeat = position, direction = LastSelected.instance.lSel, displaySprite = displayIm});
-
-        if(noteType == MusicManager.NoteType.Half)
-        {
-            taken[position] = true;
-            taken[position+1] = true;
-        }
-        else
-        {
-            taken[position] = true;
-        }
-
-        Tim.showingUI = false;
+        return;
     }
+
+    Mm.AddNote(new MusicManager.NoteInterval
+    {
+        noteType = noteType,
+        startBeat = position,
+        direction = LastSelected.instance.lSel,
+        displaySprite = displayIm,
+        sourceCard = this,
+        sourcePosition = position
+    });
+
+    if (noteType == MusicManager.NoteType.Half)
+    {
+        Mm.taken[position] = true;
+        Mm.taken[position + 1] = true;
+    }
+    else
+    {
+        Mm.taken[position] = true;
+    }
+
+    Tim.showingUI = false;
+}
 
     public void quarter()
     {
@@ -103,6 +112,12 @@ public class Card : MonoBehaviour
         if (player.health < 4)
         {
             player.health += 1;
+        }
+
+        if(Mm.inputNotes.Count > 0)
+        {
+            Mm.taken[Mm.inputNotes[0].sourcePosition] = false;
+            Mm.inputNotes.RemoveAt(0);
         }
         Tim.showingUI = false;
     }

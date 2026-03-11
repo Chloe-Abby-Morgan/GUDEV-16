@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using NUnit.Framework.Constraints;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -16,8 +18,9 @@ public class MusicManager : MonoBehaviour
     public Sprite halfFollowerSprite;
     public Sprite restSprite;
     public Sprite[] arrows;
+    public NoteInterval[] measure = new NoteInterval[4];
+    public bool[] taken = new bool[5];
     private int currentBeatIndex = 0;
-    private NoteInterval[] measure = new NoteInterval[4];
     private float nextTriggerTime = 0f;
 
     private void Start()
@@ -172,6 +175,12 @@ public class MusicManager : MonoBehaviour
         return -1;
     }
 
+
+public void AddNote(NoteInterval note)
+{
+    inputNotes.Add(note);
+}
+
     private void AssignUIImages()
     {
         for (int i = 0; i < 4; i++)
@@ -227,6 +236,9 @@ public class MusicManager : MonoBehaviour
         public Sprite displaySprite;
         public UnityEvent trigger;
         public NoteDirection direction;
+        public Card sourceCard;
+        public int sourcePosition;
+
 
         public void Trigger()
         {
@@ -241,6 +253,6 @@ public class MusicManager : MonoBehaviour
 
     public enum NoteDirection
     {
-        Up, Down, Left, Right
+        Up, Down, Left, Right, None
     }
 }

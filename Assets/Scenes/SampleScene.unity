@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimingManager
   cardUI: {fileID: 453523684}
+  waitTime: 5
   showingUI: 0
   cM: {fileID: 245582139}
 --- !u!4 &367439772
@@ -1926,7 +1927,7 @@ Transform:
   m_GameObject: {fileID: 973217714}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.0331, y: -3.43, z: 0}
+  m_LocalPosition: {x: 4.0331, y: -4.52, z: 0}
   m_LocalScale: {x: 66.13767, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
