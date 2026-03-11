@@ -30,6 +30,11 @@ public class MusicManager : MonoBehaviour
 
     private void Update()
     {
+        if(!player.playing)
+        {
+            audioSource.Stop();
+            return;
+        }
         BuildMeasure();
         AssignUIImages();
 

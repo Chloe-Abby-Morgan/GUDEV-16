@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpTime = 0.18f;
     [SerializeField] private float jumpMul = 25f;
     [SerializeField] private float jumpPow = 12f;
+    [SerializeField] private GameObject gmUI;
     private bool isGrounded = true;
     private Vector2 Movement;
     private bool isDashing = false;
@@ -30,16 +31,23 @@ public class Player : MonoBehaviour
     private bool damaging;
     public int health;
     public TimingManager Tim;
+    public bool playing=true;
     Vector2 Vgrav;
 
     void Start()
     {
         Vgrav = Vector2.up;
+        gmUI.SetActive(false);
 
     }
 
     void Update()
     {
+        if(!playing)
+        {
+            gmUI.SetActive(true);
+            return;
+        }
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.12f, whatIsGround);
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -62,6 +70,7 @@ public class Player : MonoBehaviour
                 healthObject[1].SetActive(false);
                 healthObject[2].SetActive(false);
                 healthObject[3].SetActive(false);
+                playing = false;
             }
             else if (health == 1)
             {

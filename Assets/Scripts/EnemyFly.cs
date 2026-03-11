@@ -14,16 +14,22 @@ public class EnemyFly : MonoBehaviour
     [SerializeField] private Rigidbody2D shooter;
     [SerializeField] private float fireInterval=2f;
     public TimingManager Tim;
+    public Player plyer;
 
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        plyer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         rb = GetComponent<Rigidbody2D>();
         Tim = GameObject.FindGameObjectWithTag("Tim").GetComponent<TimingManager>();
     }
 
     void Update()
     {
+        if(!plyer.playing)
+        {
+            return;
+        }
         if(!Tim.showingUI)
         {
             Vector3 lookDir = Player.position - transform.position;
