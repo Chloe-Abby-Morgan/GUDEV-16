@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private GameObject[] atackRange = new GameObject[3];
+    [SerializeField] private GameObject[] healthObject;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpUp = 1f;
     [SerializeField] private float jumpDown = 2f;
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour
     private float dInputTimer;
     private MusicManager.NoteDirection inD;
     private Vector2 dashDirection;
+    private bool damaging;
     public int health;
     public TimingManager Tim;
 
@@ -31,7 +33,44 @@ public class Player : MonoBehaviour
             if(health < 0)
             {
                 Debug.Log("Dead");
+                healthObject[0].SetActive(false);
+                healthObject[1].SetActive(false);
+                healthObject[2].SetActive(false);
+                healthObject[3].SetActive(false);
             }
+            else if(health == 1)
+            {
+                healthObject[0].SetActive(true);
+                healthObject[1].SetActive(false);
+                healthObject[2].SetActive(false);
+                healthObject[3].SetActive(false);
+            }
+            else if(health == 2)
+            {
+                healthObject[0].SetActive(true);
+                healthObject[1].SetActive(true);
+                healthObject[2].SetActive(false);
+                healthObject[3].SetActive(false); 
+            }
+            else if(health == 3)
+            {
+                healthObject[0].SetActive(true);
+                healthObject[1].SetActive(true);
+                healthObject[2].SetActive(true);
+                healthObject[3].SetActive(false);
+            }
+            else if(health == 4)
+            {
+                healthObject[0].SetActive(true);
+                healthObject[1].SetActive(true);
+                healthObject[2].SetActive(true);
+                healthObject[3].SetActive(true);
+            }
+            else if(health > 4)
+            {
+                health = 4;
+            }
+
             if (dInputWait)
             {
             dInputTimer += Time.deltaTime;
@@ -154,7 +193,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "enemy")
+        if (collision.tag == "enemy" && !damaging)
         {
             StartCoroutine(takingDamage());
         }
@@ -162,7 +201,9 @@ public class Player : MonoBehaviour
 
     IEnumerator takingDamage()
     {
+        damaging = true;
         yield return new WaitForSeconds(0.2f);
         health -= 1;
+        damaging = false;
     }
 }
