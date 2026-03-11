@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimingManager
   cardUI: {fileID: 453523684}
-  waitTime: 30
+  waitTime: 10
   showingUI: 1
   cM: {fileID: 245582139}
   Mm: {fileID: 469781469}
@@ -1089,63 +1089,6 @@ MonoBehaviour:
   smoothing: 0.1
   maxPosition: {x: 35, y: Infinity}
   minPosition: {x: -35, y: 4.5}
---- !u!1001 &526958256
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5858060818805955407, guid: e94e4d995a82f3347b4f182364172ba6, type: 3}
-      propertyPath: m_Name
-      value: EnemyFly
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721935263197675356, guid: e94e4d995a82f3347b4f182364172ba6, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.2725854
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721935263197675356, guid: e94e4d995a82f3347b4f182364172ba6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.7037997
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721935263197675356, guid: e94e4d995a82f3347b4f182364172ba6, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721935263197675356, guid: e94e4d995a82f3347b4f182364172ba6, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721935263197675356, guid: e94e4d995a82f3347b4f182364172ba6, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721935263197675356, guid: e94e4d995a82f3347b4f182364172ba6, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721935263197675356, guid: e94e4d995a82f3347b4f182364172ba6, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721935263197675356, guid: e94e4d995a82f3347b4f182364172ba6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721935263197675356, guid: e94e4d995a82f3347b4f182364172ba6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721935263197675356, guid: e94e4d995a82f3347b4f182364172ba6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e94e4d995a82f3347b4f182364172ba6, type: 3}
 --- !u!1 &550203079
 GameObject:
   m_ObjectHideFlags: 0
@@ -4456,8 +4399,8 @@ MonoBehaviour:
   enemies:
   - {fileID: 1408171091142745670, guid: 757132edd0f6f0948b70eaacca11e9b6, type: 3}
   - {fileID: 5858060818805955407, guid: e94e4d995a82f3347b4f182364172ba6, type: 3}
-  minTimeBtwSpawn: 0.75
-  maxTimeBtwSpawn: 1
+  minTimeBtwSpawn: 4
+  maxTimeBtwSpawn: 5
   canSpawn: 1
   spawnTime: 300
   enemiesInRoom: 0
@@ -4956,4 +4899,3 @@ SceneRoots:
   - {fileID: 1762449803}
   - {fileID: 366439659}
   - {fileID: 1250270951}
-  - {fileID: 526958256}
