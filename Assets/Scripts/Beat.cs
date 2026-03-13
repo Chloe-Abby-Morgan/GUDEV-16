@@ -1,5 +1,4 @@
 using System.Collections;
-using Microsoft.Unity.VisualStudio.Editor;
 using NUnit.Framework.Constraints;
 using UnityEngine;
 

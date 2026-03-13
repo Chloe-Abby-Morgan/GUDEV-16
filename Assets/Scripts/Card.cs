@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Microsoft.Unity.VisualStudio.Editor;
 using Unity.VisualScripting;
 using UnityEngine;
 
