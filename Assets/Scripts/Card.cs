@@ -20,7 +20,6 @@ public class Card : MonoBehaviour
     private void Start()
     {
         Mm = GameObject.FindWithTag("MusicMan").GetComponent<MusicManager>();
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
     public void add()
 {

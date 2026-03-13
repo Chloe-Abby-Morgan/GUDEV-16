@@ -81,9 +81,6 @@ public class Player : MonoBehaviour
         {
             jumping = false;
         }
-
-        if (!Tim.showingUI)
-        {
             if (health < 0)
             {
                 healthObject[0].SetActive(false);
@@ -124,6 +121,9 @@ public class Player : MonoBehaviour
             {
                 health = 4;
             }
+
+        if (!Tim.showingUI)
+        {
 
             if (dInputWait)
             {
