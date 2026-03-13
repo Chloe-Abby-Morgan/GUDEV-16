@@ -7,6 +7,7 @@ using UnityEngine;
 public class Card : MonoBehaviour
 {
     [SerializeField] private MusicManager Mm;
+    [SerializeField] private AudioSource AS;
     [SerializeField] private Sprite[] arrows;
     [SerializeField] private GameObject cardUI;
     public MusicManager.NoteType noteType;
@@ -49,7 +50,7 @@ public class Card : MonoBehaviour
     {
         Mm.taken[position] = true;
     }
-
+    AS.Play();
     Tim.showingUI = false;
 }
 
@@ -85,30 +86,35 @@ public class Card : MonoBehaviour
 
     public void up()
     {
+        AS.Play();
         LastSelected.instance.lSel = MusicManager.NoteDirection.Up;
         displayIm = arrows[0];
     }
 
     public void down()
     {
+        AS.Play();
         LastSelected.instance.lSel = MusicManager.NoteDirection.Down;
         displayIm = arrows[1];
     }
 
     public void right()
     {
+        AS.Play();
         LastSelected.instance.lSel = MusicManager.NoteDirection.Right;
         displayIm = arrows[2];
     }
 
     public void left()
     {
+        AS.Play();
         LastSelected.instance.lSel = MusicManager.NoteDirection.Left;
         displayIm = arrows[3];
     }
 
     public void heal()
     {
+        AS.Play();
         if (player.health < 4)
         {
             player.health += 1;

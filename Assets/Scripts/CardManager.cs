@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Text;
 
 public class CardManager : MonoBehaviour
 {
@@ -8,9 +9,11 @@ public class CardManager : MonoBehaviour
     public Transform[] spawnParent;
     public Card card;
     private List<GameObject> spawnedButtons = new List<GameObject>();
+    private AudioSource AS;
 
     void Start()
     {
+        AS = gameObject.GetComponent<AudioSource>();
         SpawnRandomButtons(3);
     }
 

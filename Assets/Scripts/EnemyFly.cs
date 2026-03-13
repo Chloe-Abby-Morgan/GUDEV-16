@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class EnemyFly : MonoBehaviour
@@ -9,6 +10,8 @@ public class EnemyFly : MonoBehaviour
     [SerializeField] private float speed=5f;
     [SerializeField] private float stoppingDistance=15f;
     [SerializeField] private float bulletSpeed=20f;
+    [SerializeField] private AudioSource Hurt;
+    [SerializeField] private AudioSource Shoot;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform shootingPoint;
     [SerializeField] private Rigidbody2D shooter;
@@ -33,9 +36,9 @@ public class EnemyFly : MonoBehaviour
         if(!Tim.showingUI)
         {
             Vector3 lookDir = Player.position - transform.position;
-            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
             shooter.rotation = angle;
-        }
+        
 
         if (Vector2.Distance(transform.position, Player.position) > stoppingDistance)
         {
@@ -49,12 +52,14 @@ public class EnemyFly : MonoBehaviour
                 StartCoroutine(Shooter());
             }
         }
+        }
     }
 
     IEnumerator Shooter()
     {
         shooting = true;
         yield return new WaitForSeconds(fireInterval);
+        Shoot.Play();
         GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, shootingPoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         Vector2 dir = (Player.position - shootingPoint.position).normalized;
@@ -66,7 +71,15 @@ public class EnemyFly : MonoBehaviour
     {
         if(collision.tag=="Player" || collision.tag=="attack")
         {
-            Destroy(gameObject);
+            StartCoroutine(Die());
         }
+    }
+
+    IEnumerator Die()
+    {
+        Hurt.Play();
+        Score.Points += 1;
+        yield return new WaitForSeconds(0.2f);
+        Destroy(gameObject);
     }
 }

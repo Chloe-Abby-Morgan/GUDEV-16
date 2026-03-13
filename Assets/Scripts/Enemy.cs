@@ -1,8 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float speed=5f;
+    [SerializeField] private SpriteRenderer Sr;
+    [SerializeField] private AudioSource AS;
     public TimingManager Tim;
     GameObject player;
     public Player plyer;
@@ -21,6 +24,8 @@ public class Enemy : MonoBehaviour
         }
         if(!Tim.showingUI)
         {
+            Vector2 direction = (player.transform.position - transform.position).normalized;
+            Sr.flipX = direction.x > 0;
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         }
     }
@@ -29,7 +34,16 @@ public class Enemy : MonoBehaviour
     {
         if(collision.tag == "attack" || collision.tag == "Player")
         {
-            Destroy(gameObject);
+            StartCoroutine(Die());
         }
     }
+
+    IEnumerator Die()
+    {
+        AS.Play();
+        Score.Points += 1;
+        yield return new WaitForSeconds(0.2f);
+        Destroy(gameObject);
+    }
+
 }
